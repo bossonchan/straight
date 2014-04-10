@@ -4,7 +4,7 @@
   "description": "A framework for socket.io using the idea of middleware",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "mocha -R spec"
   },
   "repository": {
     "type": "git",
@@ -24,5 +24,9 @@
     "socket.io": "~0.9.16",
     "debug": "~0.8.0",
     "socket.io-client": "~0.9.16"
+  },
+  "devDependencies": {
+    "should": "~3.3.0",
+    "mocha": "~1.18.2"
   }
 }
