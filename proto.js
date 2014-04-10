@@ -1,4 +1,3 @@
-var io = require('socket.io');
 var debug =  require('debug')('straight');
 
 var app = module.exports = {};
@@ -132,6 +131,7 @@ app.wrap = function (socket) {
 };
 
 app.listen = function () {
-  io = io.listen.apply(null, arguments);
-  return io;
+  var io = require('socket.io');
+  var ioServer = io.listen.apply(null, arguments);
+  return ioServer;
 };
