@@ -1,4 +1,3 @@
-var debug = require('debug')('straight');
 var proto = require('./proto');
 var utils = require('./utils');
 var basename = require('path').basename;

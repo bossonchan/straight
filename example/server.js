@@ -1,10 +1,11 @@
+var debug = require('debug')('straight');
 var straight = require('../');
 
 var app = straight();
 
 // process before every event
 app.use(function (socket, request, response) {
-  console.log("handle event %s", request._event);
+  debug("handle event %s", request._event);
   response.next();
 });
 
@@ -20,7 +21,7 @@ io.sockets.on('connection', function (socket) {
   var client = app.wrap(socket);
 
   function requiresLogin (socket, request, response) {
-    console.log('request: ', request);
+    debug('request: ', request);
     var isLogin = request.session.name ? true : false;
     if (isLogin) {
       response.next();
