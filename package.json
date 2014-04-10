@@ -1,5 +1,5 @@
 {
-  "name": "straight",
+  "name": "socket-straight",
   "version": "0.0.1",
   "description": "A framework for socket.io using the idea of middleware",
   "main": "index.js",

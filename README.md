@@ -3,6 +3,12 @@ Straight
 
 Straight is a light framework for socket.io using the art of middleware.
 
+Install
+=======
+```bash
+npm install socket-straight
+```
+
 Example
 =======
 
