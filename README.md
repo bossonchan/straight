@@ -1,7 +1,7 @@
-straight
+Straight
 ========
 
-A light framework for socket.io using the art of middleware.
+Straight is a light framework for socket.io using the art of middleware.
 
 Example
 =======
@@ -21,9 +21,12 @@ app.use(function (socket, request, response) {
 // you can access the session by `request.session`
 app.use(straight.session());
 
+// return the `io` object
 var io = app.listen(3000);
 
 io.sockets.on('connection', function (socket) {
+
+  // Wrap a socket object to overwirte the `on` function
   var client = app.wrap(socket);
 
   function requiresLogin (socket, request, response) {
