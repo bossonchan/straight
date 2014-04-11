@@ -1,4 +1,5 @@
 var debug = require('debug')('straight');
+var utils = require('./utils');
 
 module.exports = Channel
 
@@ -113,10 +114,11 @@ Channel.prototype.init = function (socket, namespace) {
   };
 
   // listen events
-  this.stack
+  var events = this.stack
     .filter(function (layer) { return layer.event !== '*'; })
-    .map(function (layer) { return layer.event; })
-    .forEach(function (event) {
-      socket.on(event, function () {});
-    });
+    .map(function (layer) { return layer.event; });
+ 
+  utils.uniq(events).forEach(function (event) {
+    socket.on(event, function () {});
+  });
 }

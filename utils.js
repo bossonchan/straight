@@ -6,3 +6,14 @@ exports.merge = function (a, b) {
   }
   return a;
 };
+
+exports.uniq = function (arr) {
+  var hash = {}, result = [];
+  for (var i = 0; i < arr.length; i++) {
+    if ( !hash.hasOwnProperty(arr[i]) ) {
+      hash[arr[i]] = true;
+      result.push(arr[i]);
+    }
+  }
+  return result;
+}

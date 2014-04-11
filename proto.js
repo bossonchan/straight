@@ -2,9 +2,6 @@ var debug =  require('debug')('straight');
 var Channel = require('./channel');
 
 var app = module.exports = {};
-app.stack = [];
-app.channels = {};
-app.server = null;
 
 app.all = function (fn) {
   if ('function' != typeof fn) {
@@ -51,5 +48,8 @@ app.listen = function () {
 };
 
 app.close = function () {
-  this.server && this.server.close();
+  if (this.server) {
+    this.server.server.close();
+    this.server = null;
+  }
 }

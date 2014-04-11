@@ -8,6 +8,9 @@ exports.middleware = {};
 
 function createServer () {
   var app = {};
+  app.stack = [];
+  app.channels = {};
+  app.server = null;
   utils.merge(app, proto);
   return app;
 }
