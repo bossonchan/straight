@@ -41,7 +41,7 @@ function requiresLogin (socket, request, response) {
 function sayHello (socket, request, response) {
   // do something..
   var result = {
-    message: 'hello
+    message: 'hello'
   };
 
   response.ack(result);
