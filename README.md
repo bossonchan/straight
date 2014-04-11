@@ -14,45 +14,55 @@ Example
 
 ```javascript
 
-var straight = require('straight');
+var straight = require('socket-straight');
 var app = straight();
 
-// process before every event
-app.use(function (socket, request, response) {
-  console.log("Handling event %s", request._event);
+// use session middleware
+// and access session by `request.session`
+app.all(straight.session());
+
+// process before every channel and event
+app.all(function (socket, request, response) {
+  console.log("handling event %s", request._event);
   response.next();
 });
 
-// use session middleware
-// you can access the session by `request.session`
-app.use(straight.session());
-
-// return the `io` object
-var io = app.listen(3000);
-
-io.sockets.on('connection', function (socket) {
-
-  // Wrap a socket object to overwirte the `on` function
-  var client = app.wrap(socket);
-
-  function requiresLogin (socket, request, response) {
-    var isLogin = request.session.isLogin;
-    if (isLogin) {
-      response.next();
-    } else {
-      response.ack({message: "sorry, you should log in frist."});
-    }
-  }
-
-  function sayHello (socket, request, response) {
-    var data = {message: 'hello, everyone!'};
-    socket.emit('event-name', data);
+function requiresLogin (socket, request, response) {
+  var session = request.session;
+  if (session.uid) {
+    response.next();
+  } else {
+    response.ack('you should login first!');
     // or
-    response.ack(data);
+    socket.emit('response-test', {message: 'you should login first!'});
   }
+}
 
-  socket.on('some-event', requiresLogin, sayHello);
+function sayHello (socket, request, response) {
+  // do something..
+  var result = {
+    message: 'hello
+  };
+
+  response.ack(result);
+  // or
+  socket.emit('response-test', result);
+}
+
+// same as `app.channel('/').on`
+app.on('request-test', requiresLogin, sayHello);
+
+// use `/users` channel
+var usersChannel = app.channel('/users');
+usersChannel.on('login', function (socket, request, response) {
+  request.session = {
+    uid: 'xxxx'
+  };
+  response.ack('success');
 });
+
+// start socket.io server
+app.listen(3000);
 
 ```
 
